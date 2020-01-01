@@ -12,6 +12,8 @@ public class HelperClass{
 	//Pershkrimi i lojes
 	public static final String GAME_DSC = "Mice chasing game about to start. Players take turns on chasing each other starting with the black mice first.";
 	public static final String FRAME_TITLE = "Mice Chasing Game";
+	public static final int width = 400;
+	public static final int height = 200;//Madhesia e dritares
 
 	/**
 	 * Konstruktori i klases HelperClass.
@@ -49,7 +51,7 @@ public class HelperClass{
 	 * @return nje vlere boolean varesisht a eshte 'miu' brenda tjetrit
 	 */
 	public static boolean checkBallPosition(int x1,int x2,int y1,int y2,int radius){
-		if(Math.sqrt(Math.pow((x2-x1),2) + Math.pow((y2-y1),2)) <= radius*2)
+			if(Math.sqrt(Math.pow((x2-x1),2) + Math.pow((y2-y1),2)) <= radius*2)
 			return true;
 		return false;
 	}

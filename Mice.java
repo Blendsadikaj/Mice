@@ -1,94 +1,76 @@
-import javax.swing.JFrame;
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 /**
  * @author Blend Sadikaj, Albin Hoxha.
- * @extends JPanel
- * @implements KeyListener
- * 
  * Klasa Mice ka per detyre gjenerimin e nje GUI
- * ku paraqiten grafikisht dy 'minje' qe ndjekin 
+ * ku paraqiten grafikisht dy 'minje' qe ndjekin njeri
  * tjetrin.
  */
-public class Mice extends JPanel implements KeyListener{
-
+public class Mice{
+	
 	private int mRadius = 10; // Rrezja e miut
 
 	private int mDiameter = 2 * mRadius;//Diametri i miut
 
 	private int mXP1 = mRadius, mYP1 = mRadius,mYP2 = mRadius; // Pozita fillestare e 'miut' 1
 
-	private int width = 400,height = 200;//Madhesia e dritares
-
-	private int mXP2 = width - mRadius; // Pozita fillestare e 'miut' 2
+	private int mXP2 = HelperClass.width - mRadius; // Pozita fillestare e 'miut' 2
+	
+	MiceView view;
 
 	private int p1Points,p2Points;// Piket e secilit lojtar
 
 	private String playersTurn = HelperClass.PLAYER_ONE; //Radhen se cili lojtar do ndjek tjetrin  
 
+	private int miceSpeed = 5;
+	
 	/**
 	  Konstruktori i klases Mice
 	 */
-	public Mice() {
-
-		//Paneli i cili paralajmeron se loja po fillon
-		JOptionPane.showMessageDialog(null,HelperClass.GAME_DSC);
-
-		//setBackground i jep ngjyre paneles
-		this.setBackground(Color.white);
-
-		//setPreferredSize percakton madhesine e paneles
-		this.setPreferredSize(new Dimension(width,height));      
-
-		//setFocusable fokusin e paneles
-		this.setFocusable(true);
-
-		/*Shton ndegjuesin e tastatures qe te marr informata nga
-		 *komponenta per shtypjen e tastatures*/
-		this.addKeyListener(this);  
-
-		//Krijimi i dritares
-		JFrame frame = new JFrame(HelperClass.FRAME_TITLE);
-
-		/*
-		 * setDefaultCloseOperation mbyll ekzekutimin e programit 
-		 * me rastin e mbylljes se dritares
-		 */
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		//Shtimi i paneles ne dritare
-		frame.getContentPane().add(this);
-
-		//pack metode e JFrame e cila i jep madhesine dritares sipas paneles brenda saj
-		frame.pack();  
-
-		//setVisible eshte metode e JFrame e cila ne kete rast bene dritaren e dukshme
-		frame.setVisible(true);
-
+	public Mice(MiceView view) {
+		this.view = view;
 	}
 
 	/**
-	 * keyTyped eshte metode e cila thirret ne rastin kur 
-	 * nje buton ne tastature shtypet.
+	 * @return the mRadius
 	 */
-	public void keyTyped(KeyEvent e) {
+	public int getmRadius() {
+		return mRadius;
+	}
+	
+	/**
+	 * @return the mDiameter
+	 */
+	public int getmDiameter() {
+		return mDiameter;
+	}
+	
+	/**
+	 * @return the mXP1
+	 */
+	public int getmXP1() {
+		return mXP1;
 	}
 
 	/**
-	 * keyPressed eshte metode e cila thirret ne rastin kur 
-	 * nje buton ne tastature shtypet.
+	 * @return the mYP1
 	 */
-	public void keyPressed(KeyEvent e) {          
+	public int getmYP1() {
+		return mYP1;
 	}
 
 	/**
-	 * keyReleased eshte metode e cila thirret ne rastin kur 
-	 * nje buton ne tastature shtypet dhe lirohet.
+	 * @return the mYP2
 	 */
-	public void keyReleased(KeyEvent e) {
-		movePlayerOne(e);
-		movePlayerTwo(e);
+	public int getmYP2() {
+		return mYP2;
+	}
+	
+	/**
+	 * @return the mXP2
+	 */
+	public int getmXP2() {
+		return mXP2;
 	}
 
 	/**
@@ -115,12 +97,12 @@ public class Mice extends JPanel implements KeyListener{
 	 * te 'minjeve'.
 	 */
 	private void generateNewPosition(){
-		mXP1 = (int)(Math.random()*width);
-		mXP2 = (int)(Math.random()*width);
-		mYP1 = (int)(Math.random()*height);
-		mYP2 = (int)(Math.random()*height);
+		mXP1 = (int)(Math.random()*HelperClass.width);
+		mXP2 = (int)(Math.random()*HelperClass.width);
+		mYP1 = (int)(Math.random()*HelperClass.width);
+		mYP2 = (int)(Math.random()*HelperClass.width);
 
-		if(HelperClass.checkIfOutOfBoundaries(mXP1,mXP2,mYP1,mYP2,width,height,mRadius) || HelperClass.checkBallPosition(mXP1,mXP2,mYP1,mYP2,mRadius))
+		if(HelperClass.checkIfOutOfBoundaries(mXP1,mXP2,mYP1,mYP2,HelperClass.width,HelperClass.height,mRadius) || HelperClass.checkBallPosition(mXP1,mXP2,mYP1,mYP2,mRadius))
 			generateNewPosition();
 	}
 
@@ -133,7 +115,7 @@ public class Mice extends JPanel implements KeyListener{
 		if(HelperClass.checkBallPosition(mXP1,mXP2,mYP1,mYP2,mRadius)){
 			generateNewPosition();
 			changePlayersTurnAndAddPoints();
-			this.repaint();  
+			view.repaint();  
 		}
 	}
 
@@ -142,34 +124,26 @@ public class Mice extends JPanel implements KeyListener{
 	 * se cili buton eshte shtypet.
 	 * Kjo metode mundeson levizjen e 'miut' 1 neper dritare
 	 */
-	private void movePlayerOne(KeyEvent e){
+	public void movePlayerOne(KeyEvent e){
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_RIGHT : 
-			if(mXP1 + mRadius + 5 > width)
-				return;
-			mXP1 += 5;
-			this.repaint();
+			mXP1 = (mXP1 + mRadius >= HelperClass.width) ? (HelperClass.width - mRadius) : (mXP1 += miceSpeed);			
+			view.repaint();
 			reset();
 			break;
 		case KeyEvent.VK_DOWN : 
-			if(mYP1 + mRadius + 5 > height)
-				return;
-			mYP1 += 5;
-			this.repaint();
+			mYP1 = (mYP1 + mRadius >= HelperClass.height) ? (HelperClass.height - mRadius) : (mYP1 += miceSpeed);	
+			view.repaint();
 			reset();
 			break;
 		case KeyEvent.VK_LEFT :
-			if(mXP1 - mRadius - 5 < 0)
-				return; 
-			mXP1 -= 5;
-			this.repaint();
+			mXP1 = (mXP1 - mRadius <= 0) ? mRadius : (mXP1 -= miceSpeed);			
+			view.repaint();
 			reset();
 			break;
 		case KeyEvent.VK_UP :
-			if( mYP1 - mRadius - 5 < 0 )
-				return;
-			mYP1 -= 5;
-			this.repaint();
+			mYP1 = ( mYP1 - mRadius <= 0 ) ? mRadius : (mYP1 -= miceSpeed);			
+			view.repaint();
 			reset();
 			break; 
 		}
@@ -180,56 +154,28 @@ public class Mice extends JPanel implements KeyListener{
 	 * se cili buton eshte shtypur.
 	 * Kjo metode mundeson levizjen e 'miut' 2 neper dritare.
 	 */
-	private void movePlayerTwo(KeyEvent e){
+	public void movePlayerTwo(KeyEvent e){
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_D : 
-			if(mXP2 + mRadius + 5 > width)
-				return;   
-			mXP2 += 5;
-			this.repaint();
+			mXP2 = (mXP2 + mRadius >= HelperClass.width) ? (HelperClass.width - mRadius) : (mXP2 += miceSpeed);			
+			view.repaint();
 			reset();  
 			break;
 		case KeyEvent.VK_S : 
-			if(mYP2 + mRadius + 5 > height)
-				return;
-			mYP2 += 5; 
-			this.repaint();
+			mYP2 = (mYP2 + mRadius >= HelperClass.height) ? (HelperClass.height - mRadius) : (mYP2 += miceSpeed);
+			view.repaint();
 			reset(); 
 			break;
 		case KeyEvent.VK_A :
-			if(mXP2 - mRadius - 5 < 0)
-				return;  
-			mXP2 -= 5;  
-			this.repaint();
+			mXP2 = (mXP2 - mRadius <= 0) ? mRadius : (mXP2 -= miceSpeed); 
+			view.repaint();
 			reset();
 			break;
 		case KeyEvent.VK_W :
-			if( mYP2 - mRadius - 5 < 0 )
-				return;
-			mYP2 -= 5;  
-			this.repaint();
+			mYP2 = (mYP2 - mRadius <= 0) ? mRadius : (mYP2 -= miceSpeed);		  
+			view.repaint();
 			reset();
 			break; 
 		}
 	}
-
-	/**
-	 * paintComponent perdoret per vizatimin ne panel
-	 * te 'minjeve'.
-	 */
-	public void paintComponent(Graphics g) {
-
-		super.paintComponent(g);
-
-		g.fillOval(mXP1 - mRadius, mYP1 - mRadius, mDiameter, mDiameter);
-		g.setColor(Color.red);
-		g.fillOval(mXP2 - mRadius, mYP2 - mRadius, mDiameter, mDiameter);
-
-	}
-
-	//Metoda main e cila bene startimin e aplikacionit
-	public static void main(String[] args) {
-		new Mice();
-	}
-
 }
