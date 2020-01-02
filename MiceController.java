@@ -2,10 +2,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
- * 
- */
-
-/**
  * @author Blend Sadikaj,Albin Hoxha
  * @implements KeyListener
  * Klasa MiceController ka per detyre detektimin
