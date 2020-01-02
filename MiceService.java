@@ -1,10 +1,6 @@
 import javax.swing.JOptionPane;
 
 /**
- * 
- */
-
-/**
  * @author Blend Sadikaj, Albin Hoxha
  * Klasa MiceService ka per detyre te merret
  * me logjiken e aplikacionit
