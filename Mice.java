@@ -23,7 +23,7 @@ public class Mice{
 
 	private String playersTurn = HelperClass.PLAYER_ONE; //Radhen se cili lojtar do ndjek tjetrin  
 
-	private int miceSpeed = 10;//Shpejtesia e 'miut'
+	private int miceSpeed = 20;//Shpejtesia e 'miut'
 	
 	/**
 	 * @param view pranon si parameter objektin MiceView
@@ -53,19 +53,19 @@ public class Mice{
 	public void movePlayerOne(KeyEvent e){
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_RIGHT : 
-			mXP1 = (mXP1 + mRadius >= HelperClass.width) ? (HelperClass.width - mRadius) : (mXP1 += miceSpeed);			
+			mXP1 = (mXP1 + mRadius + miceSpeed >= HelperClass.width) ? (HelperClass.width - mRadius) : (mXP1 += miceSpeed);			
 			paintAndCheck();
 			break;
 		case KeyEvent.VK_DOWN : 
-			mYP1 = (mYP1 + mRadius >= HelperClass.height) ? (HelperClass.height - mRadius) : (mYP1 += miceSpeed);	
+			mYP1 = (mYP1 + mRadius + miceSpeed >= HelperClass.height) ? (HelperClass.height - mRadius) : (mYP1 += miceSpeed);	
 			paintAndCheck();
 			break;
 		case KeyEvent.VK_LEFT :
-			mXP1 = (mXP1 - mRadius <= 0) ? mRadius : (mXP1 -= miceSpeed);			
+			mXP1 = (mXP1 - mRadius - miceSpeed <= 0) ? mRadius : (mXP1 -= miceSpeed);			
 			paintAndCheck();
 			break;
 		case KeyEvent.VK_UP :
-			mYP1 = ( mYP1 - mRadius <= 0 ) ? mRadius : (mYP1 -= miceSpeed);			
+			mYP1 = ( mYP1 - mRadius - miceSpeed <= 0 ) ? mRadius : (mYP1 -= miceSpeed);			
 			paintAndCheck();
 			break; 
 		}
@@ -79,19 +79,19 @@ public class Mice{
 	public void movePlayerTwo(KeyEvent e){
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_D : 
-			mXP2 = (mXP2 + mRadius >= HelperClass.width) ? (HelperClass.width - mRadius) : (mXP2 += miceSpeed);			
+			mXP2 = (mXP2 + mRadius + miceSpeed >= HelperClass.width) ? (HelperClass.width - mRadius) : (mXP2 += miceSpeed);			
 			paintAndCheck();
 			break;
 		case KeyEvent.VK_S : 
-			mYP2 = (mYP2 + mRadius >= HelperClass.height) ? (HelperClass.height - mRadius) : (mYP2 += miceSpeed);
+			mYP2 = (mYP2 + mRadius + miceSpeed >= HelperClass.height) ? (HelperClass.height - mRadius) : (mYP2 += miceSpeed);
 			paintAndCheck(); 
 			break;
 		case KeyEvent.VK_A :
-			mXP2 = (mXP2 - mRadius <= 0) ? mRadius : (mXP2 -= miceSpeed); 
+			mXP2 = (mXP2 - mRadius - miceSpeed <= 0) ? mRadius : (mXP2 -= miceSpeed); 
 			paintAndCheck();
 			break;
 		case KeyEvent.VK_W :
-			mYP2 = (mYP2 - mRadius <= 0) ? mRadius : (mYP2 -= miceSpeed);		  
+			mYP2 = (mYP2 - mRadius - miceSpeed <= 0) ? mRadius : (mYP2 -= miceSpeed);		  
 			paintAndCheck();
 			break; 
 		}
