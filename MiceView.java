@@ -7,16 +7,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * 
- */
-
-/**
  * @author Blend Sadikaj, Albin Hoxha
  * @extends JPanel
+ * Klasa MiceView ka per detyre krijimin
+ * e paneles dhe dritares
  */
 public class MiceView extends JPanel {
 	
-	Mice mice;
+	Mice mice;//mice mban objektin Mice
 	
 	public MiceView() {
 		
@@ -60,6 +58,7 @@ public class MiceView extends JPanel {
 	/**
 	 * paintComponent perdoret per vizatimin ne panel
 	 * te 'minjeve'.
+	 * @param g pranon si parameter nje objekt Graphics
 	 */
 	public void paintComponent(Graphics g) {
 

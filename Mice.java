@@ -1,5 +1,4 @@
 import java.awt.event.*;
-import javax.swing.*;
 /**
  * @author Blend Sadikaj, Albin Hoxha.
  * Klasa Mice ka per detyre gjenerimin e nje GUI
@@ -16,21 +15,88 @@ public class Mice{
 
 	private int mXP2 = HelperClass.width - mRadius; // Pozita fillestare e 'miut' 2
 	
-	MiceView view;
+	private MiceView view;//view mban objektin MiceView 
+	
+	private MiceService service;//service mban objektin MiceService
 
 	private int p1Points,p2Points;// Piket e secilit lojtar
 
 	private String playersTurn = HelperClass.PLAYER_ONE; //Radhen se cili lojtar do ndjek tjetrin  
 
-	private int miceSpeed = 5;
+	private int miceSpeed = 10;//Shpejtesia e 'miut'
 	
 	/**
+	 * @param view pranon si parameter objektin MiceView
 	  Konstruktori i klases Mice
 	 */
 	public Mice(MiceView view) {
 		this.view = view;
+		service = new MiceService(this);
+		
+	}
+	
+	/**
+	 * paintAndCheck() therret metodat repaint 
+	 * qe eshte ne klasen MiceView dhe reset
+	 * ne klasen MiceService
+	 */
+	private void paintAndCheck() {
+		view.repaint();
+		service.reset(); 
 	}
 
+	/** 
+	 * @param e eshte parameter i cili mbane informacionin
+	 * se cili buton eshte shtypet.
+	 * Kjo metode mundeson levizjen e 'miut' 1 neper dritare
+	 */
+	public void movePlayerOne(KeyEvent e){
+		switch(e.getKeyCode()){
+		case KeyEvent.VK_RIGHT : 
+			mXP1 = (mXP1 + mRadius >= HelperClass.width) ? (HelperClass.width - mRadius) : (mXP1 += miceSpeed);			
+			paintAndCheck();
+			break;
+		case KeyEvent.VK_DOWN : 
+			mYP1 = (mYP1 + mRadius >= HelperClass.height) ? (HelperClass.height - mRadius) : (mYP1 += miceSpeed);	
+			paintAndCheck();
+			break;
+		case KeyEvent.VK_LEFT :
+			mXP1 = (mXP1 - mRadius <= 0) ? mRadius : (mXP1 -= miceSpeed);			
+			paintAndCheck();
+			break;
+		case KeyEvent.VK_UP :
+			mYP1 = ( mYP1 - mRadius <= 0 ) ? mRadius : (mYP1 -= miceSpeed);			
+			paintAndCheck();
+			break; 
+		}
+	}
+
+	/**
+	 * @param e eshte parameter i cili mban informacionin
+	 * se cili buton eshte shtypur.
+	 * Kjo metode mundeson levizjen e 'miut' 2 neper dritare.
+	 */
+	public void movePlayerTwo(KeyEvent e){
+		switch(e.getKeyCode()){
+		case KeyEvent.VK_D : 
+			mXP2 = (mXP2 + mRadius >= HelperClass.width) ? (HelperClass.width - mRadius) : (mXP2 += miceSpeed);			
+			paintAndCheck();
+			break;
+		case KeyEvent.VK_S : 
+			mYP2 = (mYP2 + mRadius >= HelperClass.height) ? (HelperClass.height - mRadius) : (mYP2 += miceSpeed);
+			paintAndCheck(); 
+			break;
+		case KeyEvent.VK_A :
+			mXP2 = (mXP2 - mRadius <= 0) ? mRadius : (mXP2 -= miceSpeed); 
+			paintAndCheck();
+			break;
+		case KeyEvent.VK_W :
+			mYP2 = (mYP2 - mRadius <= 0) ? mRadius : (mYP2 -= miceSpeed);		  
+			paintAndCheck();
+			break; 
+		}
+	}
+	
 	/**
 	 * @return the mRadius
 	 */
@@ -44,7 +110,84 @@ public class Mice{
 	public int getmDiameter() {
 		return mDiameter;
 	}
-	
+
+	/**
+	 * @param mXP1 the mXP1 to set
+	 */
+	public void setmXP1(int mXP1) {
+		this.mXP1 = mXP1;
+	}
+
+	/**
+	 * @param mYP1 the mYP1 to set
+	 */
+	public void setmYP1(int mYP1) {
+		this.mYP1 = mYP1;
+	}
+
+	/**
+	 * @param mYP2 the mYP2 to set
+	 */
+	public void setmYP2(int mYP2) {
+		this.mYP2 = mYP2;
+	}
+
+	/**
+	 * @param mXP2 the mXP2 to set
+	 */
+	public void setmXP2(int mXP2) {
+		this.mXP2 = mXP2;
+	}
+
+	/**
+	 * @return the p1Points
+	 */
+	public int getP1Points() {
+		return p1Points;
+	}
+
+	/**
+	 * @param p1Points the p1Points to set
+	 */
+	public void setP1Points(int p1Points) {
+		this.p1Points = p1Points;
+	}
+
+	/**
+	 * @return the p2Points
+	 */
+	public int getP2Points() {
+		return p2Points;
+	}
+
+	/**
+	 * @param p2Points the p2Points to set
+	 */
+	public void setP2Points(int p2Points) {
+		this.p2Points = p2Points;
+	}
+
+	/**
+	 * @return the playersTurn
+	 */
+	public String getPlayersTurn() {
+		return playersTurn;
+	}
+
+	/**
+	 * @param playersTurn the playersTurn to set
+	 */
+	public void setPlayersTurn(String playersTurn) {
+		this.playersTurn = playersTurn;
+	}
+
+	/**
+	 * @return the miceSpeed
+	 */
+	public int getMiceSpeed() {
+		return miceSpeed;
+	}
+
 	/**
 	 * @return the mXP1
 	 */
@@ -72,110 +215,11 @@ public class Mice{
 	public int getmXP2() {
 		return mXP2;
 	}
-
+	
 	/**
-	 * changePlayersTurnAndAddPoints eshte metode e cila
-	 * e nderron radhen e lojtarit per t'u ndjekur
-	 * dhe njekohesisht shton piket.
+	 * @return the view
 	 */
-	private void changePlayersTurnAndAddPoints(){
-		if(playersTurn.equals(HelperClass.PLAYER_ONE)){
-			playersTurn = HelperClass.PLAYER_TWO;
-			p1Points++;
-			JOptionPane.showMessageDialog(null, HelperClass.showPoints(p1Points,p2Points));
-		}
-		else{
-			playersTurn = HelperClass.PLAYER_ONE;
-			p2Points++;
-			JOptionPane.showMessageDialog(null, HelperClass.showPoints(p1Points,p2Points));
-		}
-
-	}
-
-	/**
-	 * gjenerateNewPosition gjeneron pozitat e reja
-	 * te 'minjeve'.
-	 */
-	private void generateNewPosition(){
-		mXP1 = (int)(Math.random()*HelperClass.width);
-		mXP2 = (int)(Math.random()*HelperClass.width);
-		mYP1 = (int)(Math.random()*HelperClass.width);
-		mYP2 = (int)(Math.random()*HelperClass.width);
-
-		if(HelperClass.checkIfOutOfBoundaries(mXP1,mXP2,mYP1,mYP2,HelperClass.width,HelperClass.height,mRadius) || HelperClass.checkBallPosition(mXP1,mXP2,mYP1,mYP2,mRadius))
-			generateNewPosition();
-	}
-
-	/**
-	 * reset bene rifillimin e lojes me pozite te 
-	 * 'minjeve' te rendomte,shton piket dhe nderron
-	 * radhen e lojtarit per t'u ndjekur.
-	 */
-	private void reset(){
-		if(HelperClass.checkBallPosition(mXP1,mXP2,mYP1,mYP2,mRadius)){
-			generateNewPosition();
-			changePlayersTurnAndAddPoints();
-			view.repaint();  
-		}
-	}
-
-	/** 
-	 * @param e eshte parameter i cili mbane informacionin
-	 * se cili buton eshte shtypet.
-	 * Kjo metode mundeson levizjen e 'miut' 1 neper dritare
-	 */
-	public void movePlayerOne(KeyEvent e){
-		switch(e.getKeyCode()){
-		case KeyEvent.VK_RIGHT : 
-			mXP1 = (mXP1 + mRadius >= HelperClass.width) ? (HelperClass.width - mRadius) : (mXP1 += miceSpeed);			
-			view.repaint();
-			reset();
-			break;
-		case KeyEvent.VK_DOWN : 
-			mYP1 = (mYP1 + mRadius >= HelperClass.height) ? (HelperClass.height - mRadius) : (mYP1 += miceSpeed);	
-			view.repaint();
-			reset();
-			break;
-		case KeyEvent.VK_LEFT :
-			mXP1 = (mXP1 - mRadius <= 0) ? mRadius : (mXP1 -= miceSpeed);			
-			view.repaint();
-			reset();
-			break;
-		case KeyEvent.VK_UP :
-			mYP1 = ( mYP1 - mRadius <= 0 ) ? mRadius : (mYP1 -= miceSpeed);			
-			view.repaint();
-			reset();
-			break; 
-		}
-	}
-
-	/**
-	 * @param e eshte parameter i cili mban informacionin
-	 * se cili buton eshte shtypur.
-	 * Kjo metode mundeson levizjen e 'miut' 2 neper dritare.
-	 */
-	public void movePlayerTwo(KeyEvent e){
-		switch(e.getKeyCode()){
-		case KeyEvent.VK_D : 
-			mXP2 = (mXP2 + mRadius >= HelperClass.width) ? (HelperClass.width - mRadius) : (mXP2 += miceSpeed);			
-			view.repaint();
-			reset();  
-			break;
-		case KeyEvent.VK_S : 
-			mYP2 = (mYP2 + mRadius >= HelperClass.height) ? (HelperClass.height - mRadius) : (mYP2 += miceSpeed);
-			view.repaint();
-			reset(); 
-			break;
-		case KeyEvent.VK_A :
-			mXP2 = (mXP2 - mRadius <= 0) ? mRadius : (mXP2 -= miceSpeed); 
-			view.repaint();
-			reset();
-			break;
-		case KeyEvent.VK_W :
-			mYP2 = (mYP2 - mRadius <= 0) ? mRadius : (mYP2 -= miceSpeed);		  
-			view.repaint();
-			reset();
-			break; 
-		}
+	public MiceView getView() {
+		return view;
 	}
 }

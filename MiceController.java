@@ -11,29 +11,28 @@ import java.awt.event.KeyListener;
  */
 public class MiceController implements KeyListener {
 	
-	Mice mice;
+	Mice mice;//mice mban objektin Mice
 	
+	/**
+	 * @param mice pranon si parameter objektin Mice
+	 */
 	public MiceController(Mice mice) {
 		this.mice = mice;
 	}
 
-	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		mice.movePlayerOne(e);
-		mice.movePlayerTwo(e);
+	public void keyPressed(KeyEvent e) {		
 	}
-
-	@Override
+	/**
+	 * @param e pranon si parameter objektin KeyEvent
+	 * Kjo metod thirret sa here qe nje buton shtypet e pastaj lirohet
+	 */
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		//mice.movePlayerOne(e);
-		//mice.movePlayerTwo(e);
+			mice.movePlayerOne(e);
+			mice.movePlayerTwo(e);
 
 	}
 	
