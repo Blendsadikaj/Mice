@@ -1,8 +1,3 @@
-
-/**
- * 
- */
-
 /**
  * @author Blend Sadikaj, Albin Hoxha
  * Klasa startuese e programit
