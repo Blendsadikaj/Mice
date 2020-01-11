@@ -14,11 +14,11 @@ import javax.swing.JPanel;
  */
 public class MiceView extends JPanel {
 	
-	Mice mice;//mice mban objektin Mice
+	private Mice mice;//mice mban objektin Mice
 	
-	public MiceView() {
+	public MiceView(MiceController controller) {
 		
-		mice = new Mice(this);
+		this.mice = new Mice(this);
 		//Paneli i cili paralajmeron se loja po fillon
 		JOptionPane.showMessageDialog(null,HelperClass.GAME_DSC);
 
@@ -33,7 +33,7 @@ public class MiceView extends JPanel {
 
 		/*Shton ndegjuesin e tastatures qe te marr informata nga
 		 *komponenta per shtypjen e tastatures*/
-		this.addKeyListener(new MiceController(mice));  
+		this.addKeyListener(controller);  
 
 		//Krijimi i dritares
 		JFrame frame = new JFrame(HelperClass.FRAME_TITLE);
@@ -65,9 +65,19 @@ public class MiceView extends JPanel {
 		super.paintComponent(g);
 
 		g.fillOval(mice.getmXP1() - mice.getmRadius(), mice.getmYP1() - mice.getmRadius(), mice.getmDiameter(), mice.getmDiameter());
-		g.setColor(Color.red);
+		g.setColor(Color.lightGray);
 		g.fillOval(mice.getmXP2() - mice.getmRadius(), mice.getmYP2() - mice.getmRadius(), mice.getmDiameter(), mice.getmDiameter());
 
 	}
+
+
+	/**
+	 * @return the mice
+	 */
+	public Mice getMice() {
+		return mice;
+	}
+	
+	
 
 }

@@ -12,8 +12,8 @@ public class MiceController implements KeyListener {
 	Mice mice;
 	private String playersTurnToMove = HelperClass.PLAYER_ONE;
 	
-	public MiceController(Mice mice) {
-		this.mice = mice;
+	public MiceController() {
+		this.mice = new MiceView(this).getMice();
 	}
 
 	public void keyTyped(KeyEvent e) {}
